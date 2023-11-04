@@ -10,4 +10,5 @@ app.use("/", (req, res) => {
   });
 });
 
+app.use("/", require("./routes"));
 module.exports = app;
