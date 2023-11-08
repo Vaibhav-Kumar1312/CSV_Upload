@@ -3,14 +3,19 @@ const multer = require("multer");
 const path = require("path");
 const CSV_FILE_PATH = path.join("/uploads/CSVfiles");
 
-const CSVfileSchema = new mongoose.Schema({
-  name: {
-    type: String,
+const CSVfileSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+    },
+    CSVfile: {
+      type: String,
+    },
   },
-  CSVfile: {
-    type: String,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
