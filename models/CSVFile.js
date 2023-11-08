@@ -34,7 +34,11 @@ const storage = multer.diskStorage({
   },
 });
 
-userSchema.statics.uploadedCSVFile = multer({ storage: storage }).single(
+CSVfileSchema.statics.uploadedCSVFile = multer({ storage: storage }).single(
   "csvFile"
 );
-userSchema.statics.avatarPath = CSV_FILE_PATH;
+CSVfileSchema.statics.avatarPath = CSV_FILE_PATH;
+
+const CSV = mongoose.model("CSV", CSVfileSchema);
+
+module.exports = CSV;
