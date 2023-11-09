@@ -8,10 +8,18 @@
   <body>
     <h1>CSV UPLOAD</h1>
     <%= title %>
-    <form action="#" enctype="multipart/form-data" method="POST">
+    <form action="/upload-csv" enctype="multipart/form-data" method="post">
       <input type="text" name="name" placeholder="File Name..." />
       <input type="file" name="csvFile" placeholder="upload file" />
       <input type="submit" value="Upload" />
     </form>
+    <hr />
+    <ul>
+      <% allFiles.forEach(csv => { %>
+      <li>
+        <a href="<%= csv.CSVfile %>"><%= csv.name %></a>
+      </li>
+      <% }); %>
+    </ul>
   </body>
 </html>

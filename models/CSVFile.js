@@ -10,6 +10,7 @@ const CSVfileSchema = new mongoose.Schema(
     },
     CSVfile: {
       type: String,
+      required: true,
     },
   },
   {
@@ -37,7 +38,7 @@ const storage = multer.diskStorage({
 CSVfileSchema.statics.uploadedCSVFile = multer({ storage: storage }).single(
   "csvFile"
 );
-CSVfileSchema.statics.avatarPath = CSV_FILE_PATH;
+CSVfileSchema.statics.csvFilePath = CSV_FILE_PATH;
 
 const CSV = mongoose.model("CSV", CSVfileSchema);
 
