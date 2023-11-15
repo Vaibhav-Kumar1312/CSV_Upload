@@ -6,5 +6,7 @@ const fileController = require("../controllers/fileController.js");
 
 router.get("/", homeController.homePage);
 router.post("/upload-csv", fileController.uploadFile);
+router.get("/:id", fileController.viewFile);
+router.get("/delete/:id", fileController.deleteFile);
 
 module.exports = router;

@@ -1,7 +1,9 @@
 const CSV = require("../models/CSVFile");
 const path = require("path");
+const fs = require("fs");
+const csvParser = require("csv-parser");
 
-module.exports.uploadFile = function uploadFile(req, res) {
+exports.uploadFile = function uploadFile(req, res) {
   CSV.uploadedCSVFile(req, res, async (err) => {
     if (err) {
       console.log(err);
@@ -16,5 +18,36 @@ module.exports.uploadFile = function uploadFile(req, res) {
     console.log(req.file);
   });
   //   console.log("okay");
-  return res.redirect("/");
+  return res.status(200).redirect("/");
+};
+
+exports.viewFile = async function viewFile(req, res) {
+  try {
+    console.log(req.params.id);
+    const result = [];
+    const csvFile = await CSV.findById(req.params.id);
+    // console.log(csvFile);
+    // console.log();
+    fs.createReadStream(path.join(__dirname, "..", csvFile.CSVfile))
+      .pipe(csvParser())
+      .on("data", (data) => {
+        result.push(data);
+      })
+      .on("end", () => {
+        console.log(result);
+      });
+
+    return res.status(200).redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.deleteFile = async function deleteFile(req, res) {
+  try {
+    await CSV.findByIdAndDelete(req.params.id);
+    return res.status(204).redirect("/");
+  } catch (err) {
+    console.log(err);
+  }
 };
