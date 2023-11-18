@@ -23,21 +23,29 @@ exports.uploadFile = function uploadFile(req, res) {
 
 exports.viewFile = async function viewFile(req, res) {
   try {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     const result = [];
+    let resultHeaders;
     const csvFile = await CSV.findById(req.params.id);
     // console.log(csvFile);
     // console.log();
     fs.createReadStream(path.join(__dirname, "..", csvFile.CSVfile))
       .pipe(csvParser())
+      .on("headers", (header) => {
+        resultHeaders = header;
+        // console.log(resultHeaders);
+      })
       .on("data", (data) => {
         result.push(data);
       })
       .on("end", () => {
-        console.log(result);
+        // console.log(result);
+        return res.status(200).render("csv_file", {
+          title: csvFile.name,
+          headers: resultHeaders,
+          csvData: result,
+        });
       });
-
-    return res.status(200).redirect("/");
   } catch (error) {
     console.log(error);
   }

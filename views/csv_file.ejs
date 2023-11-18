@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1>View page</h1>
+    <table id="csv-data-table">
+      <thead>
+        <tr>
+          <% headers.forEach(element => { %>
+          <th><%= element %></th>
+          <% }); %>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (row of csvData) { %>
+        <tr>
+          <% for (key in row) { %>
+          <td><%= row[key] %></td>
+          <% } %>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <script src="/js/csv_file.js"></script>
+  </body>
+</html>

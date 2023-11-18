@@ -17,7 +17,7 @@
     <ul>
       <% allFiles.forEach(csv => { %>
       <li>
-        <a href="/<%= csv._id %>"><%= csv.name %></a>
+        <a href="/view/<%= csv._id %>"><%= csv.name %></a>
         <a href="/delete/<%= csv._id %>">Del</a>
       </li>
       <% }); %>
