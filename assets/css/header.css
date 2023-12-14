@@ -1,0 +1,12 @@
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.header-container {
+  margin: 0;
+  padding: 0;
+  background-color: darkslategrey;
+  width: 100%;
+  height: 10vh;
+}

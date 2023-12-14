@@ -1,48 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <link rel="stylesheet" href="../css/csv_file.css" />
-    <script>
-      const jsonData = "<%= JSON.stringify(csvData) %>";
-    </script>
-  </head>
-  <body>
-    <h1>View page</h1>
-    <div id="search-block">
-      <input class="search-bar" type="text" placeholder="Seacrh data" />
-      <select id="drop-down">
-        <% headers.forEach(element => { %>
-        <option><%= element %></option>
-        <% }); %>
-      </select>
-      <button class="search-button">GO</button>
-    </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <table id="csv-data-table" data-csv="<%= JSON.stringify(csvData) %>">
-      <thead>
-        <tr>
-          <% headers.forEach(element => { %>
-          <th><%= element %></th>
-          <% }); %>
-        </tr>
-      </thead>
-      <tbody class="original-table">
-        <% for (row of csvData) { %>
-        <tr>
-          <% for (key in row) { %>
-          <td><%= row[key] %></td>
-          <% } %>
-        </tr>
-        <% } %>
-      </tbody>
-      <tbody class="search-table"></tbody>
-    </table>
-    <script src="/js/csv_file.js"></script>
-  </body>
-</html>
+<link rel="stylesheet" href="../css/csv_file.css" />
+
+<h1>View page</h1>
+<div id="search-block">
+  <input class="search-bar" type="text" placeholder="Seacrh data" />
+  <select id="drop-down">
+    <% headers.forEach(element => { %>
+    <option><%= element %></option>
+    <% }); %>
+  </select>
+  <button class="search-button">GO</button>
+</div>
+<br />
+<br />
+<br />
+<br />
+<table id="csv-data-table" data-csv="<%= JSON.stringify(csvData) %>">
+  <thead>
+    <tr>
+      <% headers.forEach(element => { %>
+      <th><%= element %></th>
+      <% }); %>
+    </tr>
+  </thead>
+  <tbody class="original-table">
+    <% for (row of csvData) { %>
+    <tr>
+      <% for (key in row) { %>
+      <td><%= row[key] %></td>
+      <% } %>
+    </tr>
+    <% } %>
+  </tbody>
+  <tbody class="search-table"></tbody>
+</table>
+
+<script src="/js/csv_file.js"></script>

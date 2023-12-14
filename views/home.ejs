@@ -1,26 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-  </head>
-  <body>
-    <h1>CSV UPLOAD</h1>
-    <%= title %>
-    <form action="/upload-csv" enctype="multipart/form-data" method="post">
-      <input type="text" name="name" placeholder="File Name..." />
-      <input type="file" name="csvFile" placeholder="upload file" />
-      <input type="submit" value="Upload" />
-    </form>
-    <hr />
-    <ul>
-      <% allFiles.forEach(csv => { %>
-      <li>
-        <a href="/view/<%= csv._id %>"><%= csv.name %></a>
-        <a href="/delete/<%= csv._id %>">Del</a>
-      </li>
-      <% }); %>
-    </ul>
-  </body>
-</html>
+<link rel="stylesheet" href="/css/home.css" />
+<div class="csv-form-container">
+  <h1>Upload your CSV File</h1>
+  <!-- <%= title %> -->
+  <form action="/upload-csv" enctype="multipart/form-data" method="post">
+    <input type="text" name="name" placeholder="File Name..." />
+    <input type="file" name="csvFile" />
+    <input type="submit" value="Upload" />
+  </form>
+</div>
+<hr />
+<div class="all-files-container">
+  <ul>
+    <% allFiles.forEach(csv => { %>
+    <li>
+      <a href="/view/<%= csv._id %>"><%= csv.name %></a>
+      <a href="/delete/<%= csv._id %>">Del</a>
+    </li>
+    <% }); %>
+  </ul>
+</div>
