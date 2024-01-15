@@ -15,7 +15,7 @@
 <br />
 <br />
 <table id="csv-data-table" data-csv="<%= JSON.stringify(csvData) %>">
-  <thead>
+  <thead id="table-header">
     <tr>
       <% headers.forEach(element => { %>
       <th><%= element %></th>
