@@ -23,7 +23,8 @@ exports.uploadFile = function uploadFile(req, res) {
 
 exports.viewFile = async function viewFile(req, res) {
   try {
-    // console.log(req.params.id);
+    // console.log(req.query.page);
+    // console.log(req.query.limit);
     const result = [];
     let resultHeaders;
     const csvFile = await CSV.findById(req.params.id);
@@ -40,10 +41,20 @@ exports.viewFile = async function viewFile(req, res) {
       })
       .on("end", () => {
         // console.log(result);
+        // let newResult = []
+        let si = (Number(req.query.page) - 1) * Number(req.query.limit);
+        let ei = si + Number(req.query.limit);
+        if (si > result.length - 1) {
+          return res.redirect("/");
+        }
+        let newResult = result.slice(si, ei);
+        let totalPages = Math.ceil(result.length / Number(req.query.limit));
         return res.status(200).render("csv_file", {
           title: csvFile.name,
+          pages: totalPages,
+          pageNumber: req.query.page,
           headers: resultHeaders,
-          csvData: result,
+          csvData: newResult,
         });
       });
   } catch (error) {

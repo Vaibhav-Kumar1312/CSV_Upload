@@ -4,13 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
     <link rel="stylesheet" href="/css/layout.css" />
     <%- style %>
   </head>
   <body>
-    <div class="main-header"><%- include('_header') %></div>
+    <header class="main-header"><%- include('_header') %></header>
     <main class="main-layout"><%- body %></main>
-    <div class="main-footer"><%- include('_footer') %></div>
+    <footer class="main-footer"><%- include('_footer') %></footer>
     <%- script %>
   </body>
 </html>

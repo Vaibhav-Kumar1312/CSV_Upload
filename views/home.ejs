@@ -1,20 +1,34 @@
 <link rel="stylesheet" href="/css/home.css" />
+
 <div class="csv-form-container">
-  <h1>Upload your CSV File</h1>
-  <!-- <%= title %> -->
+  <h3>Upload your CSV File....</h3>
   <form action="/upload-csv" enctype="multipart/form-data" method="post">
-    <input type="text" name="name" placeholder="File Name..." />
+    <input
+      type="text"
+      name="name"
+      placeholder="File Name..."
+      autocomplete="off"
+    />
     <input type="file" name="csvFile" />
-    <input type="submit" value="Upload" />
+    <!-- <input type="submit" value="upload" /> -->
+    <button type="submit"><i class="bi bi-upload"></i> Upload</button>
   </form>
 </div>
-<hr />
 <div class="all-files-container">
   <ul>
     <% allFiles.forEach(csv => { %>
     <li>
-      <a href="/view/<%= csv._id %>"><%= csv.name %></a>
-      <a href="/delete/<%= csv._id %>">Del</a>
+      <a class="file-delete" href="/delete/<%= csv._id %>">
+        <span>
+          <i class="bi bi-trash3"></i>
+        </span>
+      </a>
+      <a class="file-open" href="/view/<%= csv._id %>?page=1&limit=100">
+        <div class="file-icon">
+          <i class="bi bi-filetype-csv"></i>
+        </div>
+        <p class="file-title"><%= csv.name %></p>
+      </a>
     </li>
     <% }); %>
   </ul>

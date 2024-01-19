@@ -1,37 +1,55 @@
 <link rel="stylesheet" href="../css/csv_file.css" />
 
-<h1>View page</h1>
-<div id="search-block">
-  <input class="search-bar" type="text" placeholder="Seacrh data" />
-  <select id="drop-down">
-    <% headers.forEach(element => { %>
-    <option><%= element %></option>
-    <% }); %>
-  </select>
-  <button class="search-button">GO</button>
+<!-- <p class="search-text">Search in current page of <%= title %></p> -->
+<div class="search-bar-container">
+  <input
+    class="search-bar"
+    type="text"
+    placeholder="Search data in table... "
+  />
+  <button class="search-button"><i class="bi bi-search"></i></button>
 </div>
-<br />
-<br />
-<br />
-<br />
-<table id="csv-data-table" data-csv="<%= JSON.stringify(csvData) %>">
-  <thead id="table-header">
-    <tr>
-      <% headers.forEach(element => { %>
-      <th><%= element %></th>
-      <% }); %>
-    </tr>
-  </thead>
-  <tbody class="original-table">
-    <% for (row of csvData) { %>
-    <tr>
-      <% for (key in row) { %>
-      <td><%= row[key] %></td>
+<div>
+  <form id="pagination-form">
+    <button class="btn-left">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+    <div class="skipTo-btn">
+      <button id="page-button" type="button">Skip To</button>
+      <select id="page-number">
+        <% for(let i=1 ; i <= pages ; i++){ %> <% if (Number(pageNumber)===i) {
+        %>
+        <option selected><%= i %></option>
+        <% } else { %>
+        <option><%= i %></option>
+        <% }; %> <% }; %>
+      </select>
+    </div>
+    <button class="btn-right" data-lastPage="<%= pages %>">
+      <i class="bi bi-arrow-right"></i>
+    </button>
+  </form>
+</div>
+<div class="table-container">
+  <table id="csv-data-table" data-csv="<%= JSON.stringify(csvData) %>">
+    <thead id="table-header">
+      <tr>
+        <% headers.forEach(element => { %>
+        <th><%= element %></th>
+        <% }); %>
+      </tr>
+    </thead>
+    <tbody class="original-table">
+      <% for (row of csvData) { %>
+      <tr>
+        <% for (key in row) { %>
+        <td><%= row[key] %></td>
+        <% } %>
+      </tr>
       <% } %>
-    </tr>
-    <% } %>
-  </tbody>
-  <tbody class="search-table"></tbody>
-</table>
+    </tbody>
+    <tbody class="search-table"></tbody>
+  </table>
+</div>
 
 <script src="/js/csv_file.js"></script>

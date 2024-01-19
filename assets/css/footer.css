@@ -1,7 +1,15 @@
 .footer-container {
-  background-color: darksalmon;
+  margin: 0;
+  padding: 0;
   width: 100%;
   height: 10vh;
-  position: fixed;
+  position: relative;
   bottom: 0;
+  text-align: center;
+}
+
+.footer-container p {
+  color: #a3c6ff;
+  padding: 3vh 0;
+  margin: 0;
 }

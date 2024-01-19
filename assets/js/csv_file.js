@@ -3,6 +3,12 @@ let tableHeader = document.querySelector("#table-header");
 let originaltBody = document.querySelector(".original-table");
 let searchtBody = document.querySelector(".search-table");
 let searchInput = document.querySelector(".search-bar");
+const pageForm = document.querySelector("#pagination-form");
+const skipPageBtn = document.querySelector("#page-button");
+const btnLeft = document.querySelector(".btn-left");
+const btnRight = document.querySelector(".btn-right");
+const pageChangeBtn = document.querySelectorAll(".page-change-btn");
+const selectDD = document.querySelector("#page-number");
 let data = initialTable.dataset.csv;
 let csvArray = JSON.parse(data);
 let sortData = [];
@@ -23,7 +29,6 @@ function displaySearchTable(objectArray) {
     newRow.innerHTML = html;
     searchtBody.appendChild(newRow);
   }
-  // tableRow.insertAdjacentHTML("beforeend", html);
 }
 
 searchInput.addEventListener("keyup", function (e) {
@@ -36,12 +41,7 @@ searchInput.addEventListener("keyup", function (e) {
     for (let i = 0; i < csvArray.length; i++) {
       let valueArray = Object.values(csvArray[i]);
       console.log(valueArray);
-      // valueArray.forEach((item) => {
-      //   if (item.toLowerCase().includes(e.target.value.toLowerCase())) {
-      //     newData.push(csvArray[i]);
-      //     return;
-      //   }
-      // });
+
       for (const item of valueArray) {
         if (item.toLowerCase().includes(e.target.value.toLowerCase())) {
           newData.push(csvArray[i]);
@@ -52,14 +52,15 @@ searchInput.addEventListener("keyup", function (e) {
   }
   sortData = [...newData];
   displaySearchTable(newData);
-  // console.log(newData);
+
   console.log(sortData);
 });
-// function renderTable(htmlElement) {
-// tableRow;
-// }
-// console.log(JSON.parse(JSON.stringify(jsonData)));
-// displaySearchTable(csvArray);
+
+function renderSortedTable(arr) {
+  originaltBody.innerHTML = "";
+  arr.forEach(() => {});
+}
+
 tableHeader.addEventListener("click", function (e) {
   console.log(e.target.innerHTML);
   if (sortData.length) {
@@ -70,8 +71,6 @@ tableHeader.addEventListener("click", function (e) {
 });
 function sortTableData(key, tableData) {
   const data = [...tableData];
-  // console.log(data[0][key]);
-  // console.log(Number.isNaN(Number(data[0][key])));
   if (!Number.isNaN(Number(data[0][key]))) {
     console.log("number sort");
     data.sort((a, b) => a[key] - b[key]);
@@ -90,9 +89,28 @@ function sortTableData(key, tableData) {
     });
   }
   displaySearchTable(data);
-  // if (!isNaN(Date.parse(data[0][key]))) {
-  //   console.log("date sorted");
-  // }
 }
 
-// sortTableData(csvArray);
+skipPageBtn.addEventListener("click", function (event) {
+  const queryString = `?page=${selectDD.value}&limit=100`;
+  window.location.search = queryString;
+});
+
+btnLeft.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (Number(selectDD.value) - 1 > 0) {
+    const queryString = `?page=${Number(selectDD.value) - 1}&limit=100`;
+    window.location.search = queryString;
+    return;
+  }
+});
+
+btnRight.addEventListener("click", function (e) {
+  e.preventDefault();
+  console.log(btnRight.dataset.lastpage);
+  if (Number(selectDD.value) + 1 < btnRight.dataset.lastpage) {
+    const queryString = `?page=${Number(selectDD.value) + 1}&limit=100`;
+    window.location.search = queryString;
+    return;
+  }
+});
