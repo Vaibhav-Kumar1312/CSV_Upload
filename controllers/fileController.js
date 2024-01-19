@@ -3,45 +3,51 @@ const path = require("path");
 const fs = require("fs");
 const csvParser = require("csv-parser");
 
+/**
+ * Checks the file type and stores the file in the database
+ * @param {req object containing csv file data} req
+ * @param {server response object} res
+ */
 exports.uploadFile = function uploadFile(req, res) {
   CSV.uploadedCSVFile(req, res, async (err) => {
     if (err) {
       console.log(err);
       return;
     }
+    if (req.file.mimetype !== "text/csv") {
+      console.log("okay");
+      return res.send(
+        "<h1>Upload only CSV File can not upload any other file type</h1>"
+      );
+    }
     const newCsvFile = await CSV.create({
       name: req.body.name,
       CSVfile: path.win32.normalize(`${CSV.csvFilePath}/${req.file.filename}`),
     });
-    console.log(newCsvFile);
-    console.log(req.body);
-    console.log(req.file);
+    return res.status(200).redirect("/");
   });
-  //   console.log("okay");
-  return res.status(200).redirect("/");
 };
 
+/**
+ * Reads the CSV file data from the database and sends the data
+ * with limit of 100 to the client
+ * @param {*} req
+ * @param {*} res
+ */
 exports.viewFile = async function viewFile(req, res) {
   try {
-    // console.log(req.query.page);
-    // console.log(req.query.limit);
     const result = [];
     let resultHeaders;
     const csvFile = await CSV.findById(req.params.id);
-    // console.log(csvFile);
-    // console.log();
     fs.createReadStream(path.join(__dirname, "..", csvFile.CSVfile))
       .pipe(csvParser())
       .on("headers", (header) => {
         resultHeaders = header;
-        // console.log(resultHeaders);
       })
       .on("data", (data) => {
         result.push(data);
       })
       .on("end", () => {
-        // console.log(result);
-        // let newResult = []
         let si = (Number(req.query.page) - 1) * Number(req.query.limit);
         let ei = si + Number(req.query.limit);
         if (si > result.length - 1) {
@@ -58,15 +64,22 @@ exports.viewFile = async function viewFile(req, res) {
         });
       });
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 
+/**
+ * handles the delete request by finding the file by its id
+ * and delete's from the database
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 exports.deleteFile = async function deleteFile(req, res) {
   try {
     await CSV.findByIdAndDelete(req.params.id);
     return res.status(204).redirect("/");
   } catch (err) {
-    console.log(err);
+    throw new Error(err);
   }
 };
