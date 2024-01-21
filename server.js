@@ -1,8 +1,8 @@
-// TO-DO = make environment variable file
-
+const dotenv = require("dotenv");
+dotenv.config();
 const app = require("./index.js");
 const db = require("./config/mongoose.js");
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 db.connectToMongoDB();
 app.listen(port, (err) => {

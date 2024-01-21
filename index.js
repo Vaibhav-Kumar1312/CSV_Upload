@@ -12,11 +12,5 @@ app.use(expressLayouts);
 app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
 
-// app.use("/", (req, res) => {
-//   return res.render("home", {
-//     title: "Hello",
-//   });
-// });
-
 app.use("/", require("./routes"));
 module.exports = app;
