@@ -20,10 +20,11 @@ exports.uploadFile = function uploadFile(req, res) {
         "<h1>Upload only CSV File can not upload any other file type</h1>"
       );
     }
+
     const newCsvFile = await CSV.create({
       name: req.body.name,
-      // CSVfile: path.win32.normalize(`${CSV.csvFilePath}/${req.file.filename}`),
-      CSVfile: path.resolve(`/${CSV.csvFilePath}`, req.file.filename),
+      CSVfile: path.win32.normalize(`${CSV.csvFilePath}/${req.file.filename}`),
+      // CSVfile: path.resolve(`/${CSV.csvFilePath}`, req.file.filename),
     });
     return res.status(200).redirect("/");
   });
@@ -42,7 +43,7 @@ exports.viewFile = async function viewFile(req, res) {
     const csvFile = await CSV.findById(req.params.id);
 
     dbFilePath = path.resolve(csvFile.CSVfile);
-    console.log(path.posix.join(...dbFilePath.split("\\")));
+    // console.log(path.posix.join(...dbFilePath.split("\\")));
     fs.createReadStream(path.posix.join(...dbFilePath.split("\\")))
       .pipe(csvParser())
       .on("headers", (header) => {
