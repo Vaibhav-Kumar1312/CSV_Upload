@@ -41,7 +41,9 @@ exports.viewFile = async function viewFile(req, res) {
     const result = [];
     let resultHeaders;
     const csvFile = await CSV.findById(req.params.id);
-    fs.createReadStream(path.join(__dirname, "..", csvFile.CSVfile))
+
+    // console.log(path.join(__dirname, "..", csvFile.CSVfile));
+    fs.createReadStream(path.resolve(csvFile.CSVfile))
       .pipe(csvParser())
       .on("headers", (header) => {
         resultHeaders = header;
