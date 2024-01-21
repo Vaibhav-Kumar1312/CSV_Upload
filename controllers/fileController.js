@@ -1,5 +1,5 @@
 const CSV = require("../models/CSVFile");
-const path = require("path");
+const path = require("node:path");
 const fs = require("fs");
 const csvParser = require("csv-parser");
 
@@ -20,9 +20,11 @@ exports.uploadFile = function uploadFile(req, res) {
         "<h1>Upload only CSV File can not upload any other file type</h1>"
       );
     }
+
     const newCsvFile = await CSV.create({
       name: req.body.name,
-      CSVfile: path.win32.normalize(`${CSV.csvFilePath}/${req.file.filename}`),
+      // CSVfile: path.win32.normalize(`${CSV.csvFilePath}/${req.file.filename}`),
+      CSVfile: path.resolve(`/${CSV.csvFilePath}`, req.file.filename),
     });
     return res.status(200).redirect("/");
   });
